@@ -1,0 +1,2815 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krása & Zdraví | Centrum laserové estetiky</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #D4C1B0;
+            --primary-dark: #B2A08F;
+            --secondary: #1A1A1A;
+            --secondary-light: #333333;
+            --accent: #F0E5D8;
+            --text: #1A1A1A;
+            --text-light: #777777;
+            --background: #FFFFFF;
+            --light-bg: #F9F8F6;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            background-color: var(--background);
+            line-height: 1.6;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background-color: var(--primary);
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-dark);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--text);
+        }
+        
+        .section-padding {
+            padding: 120px 0;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            margin-right: 30px;
+        }
+        
+        .nav-item {
+            margin: 0 20px;
+        }
+        
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-link {
+            margin-left: 10px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .language-link:hover {
+            opacity: 1;
+        }
+        
+        .language-link.active {
+            opacity: 1;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            width: 30px;
+            cursor: pointer;
+        }
+        
+        .mobile-toggle span {
+            height: 2px;
+            width: 100%;
+            background-color: var(--secondary);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--light-bg);
+            overflow: hidden;
+        }
+        
+        .hero-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url('/api/placeholder/1600/900?query=beauty spa facial treatment luxury');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(100px 0, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .hero-content {
+            width: 50%;
+            z-index: 1;
+        }
+        
+        .hero-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            line-height: 1.1;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--secondary);
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            max-width: 500px;
+            margin-bottom: 40px;
+            color: var(--text-light);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+        }
+        
+        .scroll-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            transform: rotate(-90deg);
+        }
+        
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background-color: var(--text-light);
+        }
+        
+        /* About Section */
+        .about {
+            position: relative;
+            background-color: var(--background);
+        }
+        
+        .about-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        
+        .about-content {
+            flex: 1;
+        }
+        
+        .section-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--secondary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .section-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-accent {
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 200px;
+            height: 200px;
+            background-color: var(--accent);
+            z-index: -1;
+            border-radius: 5px;
+        }
+        
+        /* Services Section */
+        .services {
+            background-color: var(--light-bg);
+        }
+        
+        .services-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+        
+        .services-title {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .services-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--background);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+        
+        .service-content {
+            padding: 30px;
+        }
+        
+        .service-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .service-description {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .service-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-link span {
+            margin-left: 5px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .service-link:hover span {
+            margin-left: 10px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            position: relative;
+            background-color: var(--background);
+            overflow: hidden;
+        }
+        
+        .testimonials-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .testimonials-slider {
+            margin-top: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .testimonials-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial-item {
+            min-width: 100%;
+            padding: 0 20px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 100px;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.6;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+            color: var(--text);
+            font-style: italic;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .testimonial-author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-author-info h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .testimonial-author-info p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+        
+        .testimonial-control {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            border: none;
+            color: var(--secondary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .testimonial-control:hover {
+            background-color: var(--primary);
+            color: var(--text);
+        }
+        
+        .testimonial-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.3);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            position: relative;
+            background-color: var(--light-bg);
+            overflow: hidden;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+        
+        .gallery-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            transform-origin: center;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .gallery-item:hover {
+            z-index: 1;
+            transform: scale(1.05);
+        }
+        
+        .gallery-item:nth-child(1) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+        
+        .gallery-item:nth-child(2) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        
+        .gallery-item:nth-child(3) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        
+        .gallery-item:nth-child(4) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        
+        .gallery-item:nth-child(5) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 30px;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-caption {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        /* CTA Section */
+        .cta {
+            position: relative;
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .cta-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--primary-dark) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.2;
+        }
+
+        .cta-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .cta-content {
+            flex: 1;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .cta-text {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            max-width: 600px;
+        }
+
+        .cta-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border-radius: 50%;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-weight: 500;
+        }
+
+        .cta-button {
+            background-color: var(--secondary);
+            color: white;
+            padding: 16px 32px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cta-button:hover {
+            background-color: black;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .btn-icon {
+            transform: translateX(5px);
+        }
+
+        .cta-image {
+            flex: 1;
+            position: relative;
+            max-width: 500px;
+        }
+
+        .cta-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cta-accent {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 200px;
+            height: 200px;
+            background-color: var(--secondary);
+            opacity: 0.1;
+            border-radius: 10px;
+            z-index: -1;
+        }
+        
+        /* Contact Section */
+        .contact {
+            position: relative;
+            background-color: var(--background);
+            padding-bottom: 0;
+        }
+        
+        .contact-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+        
+        .contact-form {
+            padding: 60px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .contact-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .contact-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-btn {
+            background-color: var(--primary);
+            color: var(--secondary);
+            font-weight: 600;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info {
+            padding-top: 30px;
+        }
+        
+        .contact-info-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .contact-info-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .contact-info-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: var(--secondary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .contact-info-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .contact-info-content p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .map-container {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        .footer {
+            position: relative;
+            background-color: var(--secondary);
+            color: rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+        }
+
+        .footer-top {
+            padding: 100px 0 80px;
+            position: relative;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-logo:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-logo:hover:after {
+            width: 100px;
+        }
+
+        .footer-logo-accent {
+            display: block;
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .footer-description {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact-cta {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+
+        .footer-phone {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-phone:hover {
+            color: var(--primary);
+        }
+
+        .footer-hours {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .footer-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-heading:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-link {
+            position: relative;
+            padding-left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+            padding-left: 8px;
+        }
+
+        .footer-link:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 1px;
+            background-color: var(--primary);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover:before {
+            width: 4px;
+            opacity: 1;
+        }
+
+        .footer-address {
+            font-style: normal;
+        }
+
+        .address-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .address-icon {
+            margin-right: 15px;
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 20px;
+        }
+
+        .legal-link {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+            color: #fff;
+        }
+
+        .footer-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .footer-shape {
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 193, 176, 0.05) 0%, rgba(212, 193, 176, 0) 70%);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            height: 100%;
+            background-color: var(--background);
+            z-index: 9999;
+            padding: 100px 40px 40px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+            transition: right 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-close span {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+            transform-origin: center;
+        }
+
+        .mobile-menu-close span:first-child {
+            transform: rotate(45deg);
+        }
+
+        .mobile-menu-close span:last-child {
+            transform: rotate(-45deg);
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-item {
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .mobile-nav-link::after {
+            content: '→';
+            position: absolute;
+            right: 10px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-link:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-contact {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-contact-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .mobile-contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .mobile-contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .mobile-contact-text {
+            font-size: 15px;
+        }
+
+        .mobile-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .mobile-social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .mobile-language {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .mobile-language-link {
+            padding: 5px 10px;
+            border-radius: 3px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-language-link.active {
+            background-color: var(--primary);
+            opacity: 1;
+        }
+
+        /* Mobile Toggle Animation */
+        .mobile-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        /* Cursor Styles */
+        .cursor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .cursor {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            z-index: 9999;
+        }
+        
+        .cursor-follower {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(209, 196, 179, 0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s;
+            z-index: 9998;
+        }
+        
+        /* Mobile Fixed CTA */
+        .mobile-fixed-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 990;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-fixed-cta-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .mobile-fixed-cta-btn {
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: var(--primary-dark);
+            transform: rotate(90deg);
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .zoom-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .stagger-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-text {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reveal-text::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            transform: translateX(-100%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-text.active::after {
+            transform: translateX(100%);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 60px;
+            }
+            
+            .section-title, .cta-title {
+                font-size: 42px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 200px);
+            }
+            
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+                grid-row: span 2;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .section-padding {
+                padding: 100px 0;
+            }
+            
+            .nav-list {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            .hero-content {
+                width: 100%;
+                padding: 0 40px;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 50px;
+            }
+            
+            .hero-description {
+                margin: 0 auto 40px;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-img {
+                opacity: 0.2;
+                width: 100%;
+                clip-path: none;
+            }
+            
+            .about-inner {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-inner {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                order: -1;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .cta-inner {
+                flex-direction: column;
+            }
+            
+            .cta-image {
+                max-width: 100%;
+                order: -1;
+            }
+            
+            .mobile-fixed-cta {
+                display: flex;
+            }
+            
+            body {
+                padding-bottom: 70px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 80px 0;
+            }
+            
+            .hero-title {
+                font-size: 40px;
+            }
+            
+            .section-title, .cta-title {
+                font-size: 36px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(5, 200px);
+            }
+            
+            .gallery-item:nth-child(n) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            
+            .testimonial-author {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .testimonial-author-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .footer-bottom-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-legal, .footer-social {
+                justify-content: center;
+            }
+            
+            .contact-form {
+                padding: 40px 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .section-padding {
+                padding: 60px 0;
+            }
+            
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .hero-subtitle, .section-subtitle {
+                font-size: 12px;
+            }
+            
+            .section-title, .cta-title {
+                font-size: 30px;
+            }
+            
+            .hero-description, .section-description, .cta-text {
+                font-size: 15px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .back-to-top {
+                bottom: 90px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-container">
+        <div class="cursor"></div>
+        <div class="cursor-follower"></div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">Krása & Zdraví</a>
+                
+                <div class="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#home" class="nav-link">Domů</a></li>
+                        <li class="nav-item"><a href="#about" class="nav-link">O nás</a></li>
+                        <li class="nav-item"><a href="#services" class="nav-link">Služby</a></li>
+                        <li class="nav-item"><a href="#testimonials" class="nav-link">Reference</a></li>
+                        <li class="nav-item"><a href="#gallery" class="nav-link">Galerie</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Kontakt</a></li>
+                    </ul>
+                    
+                    <div class="language-selector">
+                        <a href="#" class="language-link active">CZ</a>
+                        <a href="#" class="language-link">EN</a>
+                    </div>
+                    
+                    <div class="mobile-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item"><a href="#home" class="mobile-nav-link">Domů</a></li>
+            <li class="mobile-nav-item"><a href="#about" class="mobile-nav-link">O nás</a></li>
+            <li class="mobile-nav-item"><a href="#services" class="mobile-nav-link">Služby</a></li>
+            <li class="mobile-nav-item"><a href="#testimonials" class="mobile-nav-link">Reference</a></li>
+            <li class="mobile-nav-item"><a href="#gallery" class="mobile-nav-link">Galerie</a></li>
+            <li class="mobile-nav-item"><a href="#contact" class="mobile-nav-link">Kontakt</a></li>
+        </ul>
+        
+        <div class="mobile-language">
+            <a href="#" class="mobile-language-link active">CZ</a>
+            <a href="#" class="mobile-language-link">EN</a>
+        </div>
+        
+        <div class="mobile-contact">
+            <h4 class="mobile-contact-title">Kontaktujte nás</h4>
+            <div class="mobile-contact-item">
+                <div class="mobile-contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="mobile-contact-text">Vinohradská 1233/22, Praha 2</div>
+            </div>
+            <div class="mobile-contact-item">
+                <div class="mobile-contact-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="mobile-contact-text">+420 123 456 789</div>
+            </div>
+            <div class="mobile-contact-item">
+                <div class="mobile-contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="mobile-contact-text">info@krasa-zdravi.cz</div>
+            </div>
+            
+            <div class="mobile-social">
+                <a href="#" class="mobile-social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="mobile-social-link"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content fade-in">
+                    <div class="hero-subtitle">Centrum laserové estetiky</div>
+                    <h1 class="hero-title">Krásná a zdravá pleť díky odborné péči</h1>
+                    <p class="hero-description">Netrapte se nedokonalostmi svého těla a dopřejte si naší profesionální péči. Budete se cítit krásně, sebevědomě a zdravě.</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn">Naše služby</a>
+                        <a href="#contact" class="btn btn-outline">Kontaktujte nás</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-img"></div>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-text">Scroll</div>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="about section-padding">
+            <div class="container">
+                <div class="about-inner">
+                    <div class="about-content fade-in-left">
+                        <div class="section-subtitle">O nás</div>
+                        <h2 class="section-title reveal-text">Více než 20 let zkušeností v oblasti laserové estetiky</h2>
+                        <p class="section-description">Centrum laserové estetiky Krása & Zdraví poskytuje již více než 20 let špičkovou péči v oblasti estetické medicíny. Díky dlouholeté praxi a vyzkoušení mnoha přístrojů a technik vám můžeme nabídnout opravdu účinné řešení vašich problémů.</p>
+                        <p class="section-description">Naše centrum nabízí pomocnou ruku při řešení problémů s celulitidou, vráskami, unavenou pokožkou nebo povolenou postavou. Víme, jak mohou i malé nedokonalosti trápit, a proto se zaměřujeme na jejich efektivní odstranění, abyste se cítili nejen krásněji, ale i zdravěji.</p>
+                        <a href="#services" class="btn">Naše služby</a>
+                    </div>
+                    
+                    <div class="about-image fade-in-right">
+                        <img src="/api/placeholder/600/800?query=modern aesthetic clinic interior" alt="Naše centrum">
+                        <div class="image-accent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section id="services" class="services section-padding">
+            <div class="container">
+                <div class="services-header fade-in">
+                    <div class="section-subtitle">Naše služby</div>
+                    <h2 class="section-title services-title">Profesionální péče</h2>
+                    <p class="section-description">Nabízíme komplexní služby v oblasti laserové estetiky a zdraví zaměřené na vaši pokožku a celkovou krásu.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Service Card 1 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=laser facial treatment" alt="Laserové ošetření pleti">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Laserové ošetření pleti</h3>
+                            <p class="service-description">Obnovte pružnost a zářivý vzhled vaší pleti pomocí našeho exkluzivního laserového ošetření s 24K zlatem.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 2 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=skin rejuvenation treatment" alt="Omlazení pokožky">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Omlazení pokožky</h3>
+                            <p class="service-description">Naše metody omlazení pokožky kombinují nejnovější technologie pro dosažení efektu zdravé, hydratované a zářivé pleti.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 3 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=body sculpting treatment" alt="Formování postavy">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Formování postavy</h3>
+                            <p class="service-description">Zpevněte svou postavu a zbavte se celulitidy pomocí našich speciálních procedur navržených pro vaše specifické potřeby.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 4 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=laser hair removal" alt="Odstranění chloupků">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Odstranění chloupků</h3>
+                            <p class="service-description">Permanentní odstraněni nežádoucích chloupků pomocí nejmodernějších laserových technologií s vynikajícími výsledky.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 5 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=skin tag removal" alt="Odstranění kožních výrůstků">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Odstranění kožních výrůstků</h3>
+                            <p class="service-description">Bezbolestné odstranění kožních výrůstků bez jizev pomocí pokročilých laserových technologií.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 6 -->
+                    <div class="service-card stagger-item">
+                        <div class="service-image">
+                            <img src="/api/placeholder/600/400?query=pelvic floor muscle strengthening" alt="Posilování pánevních svalů">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Posilování pánevního dna</h3>
+                            <p class="service-description">Metoda Biocon pro zpevnění pánevních svalů, prevenci inkontinence a podporu zdravého pánevního dna.</p>
+                            <a href="#" class="service-link">Zjistit více <span>→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials section-padding">
+            <div class="container">
+                <div class="testimonials-inner">
+                    <div class="section-subtitle">Reference</div>
+                    <h2 class="section-title reveal-text">Co o nás říkají klienti</h2>
+                    
+                    <div class="testimonials-slider">
+                        <div class="testimonials-wrapper" id="testimonialsWrapper">
+                            <!-- Testimonial 1 -->
+                            <div class="testimonial-item active">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        <p class="testimonial-text">Do Centra laserové estetiky chodím přibližně od roku 2000 a zřejmě zůstanu u nich klientkou dokud budou existovat. Jsou nejlepší. Mají úžasné výsledky, neuvěřitelně vřelý a milý přístup ke klientovi, přijatelné ceny a skvělou komunikaci s klientem.</p>
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-author-img">
+                                                <img src="/api/placeholder/120/120?query=female portrait woman" alt="Klient">
+                                            </div>
+                                            <div class="testimonial-author-info">
+                                                <h4>Jana P.</h4>
+                                                <p>Dlouhodobá klientka</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Testimonial 2 -->
+                            <div class="testimonial-item">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        <p class="testimonial-text">Centrum laserové estetiky doporučuji. Byla jsem zde na odstranění bradavic. Jen malinko to štipalo, ale s výsledkem jsem spokojená. Na odstranění nežádoucích chloupků budete potřebovat trpělivost, není to hned jako u bradavic. Ale vždy usměvavá a vstřícná obsluha, Vás povzbudí.</p>
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-author-img">
+                                                <img src="/api/placeholder/120/120?query=female portrait young woman" alt="Klient">
+                                            </div>
+                                            <div class="testimonial-author-info">
+                                                <h4>Markéta K.</h4>
+                                                <p>Pravidelná klientka</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Testimonial 3 -->
+                            <div class="testimonial-item">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        <p class="testimonial-text">Jsem klientkou Centra zdraví Well již 23 let. Oceňuji vždy vstřícný, milý a empatický přístup sestřiček v čele s paní doktorkou spojený s vysokou profesionalitou a odborností. Atmosféra na konzultacích i během ošetření je vždy v klidu a bez stresu.</p>
+                                        <div class="testimonial-author">
+                                            <div class="testimonial-author-img">
+                                                <img src="/api/placeholder/120/120?query=female portrait elegant woman" alt="Klient">
+                                            </div>
+                                            <div class="testimonial-author-info">
+                                                <h4>Andrea</h4>
+                                                <p>Spokojená klientka</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-controls">
+                            <button class="testimonial-control" id="prevTestimonial">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <button class="testimonial-control" id="nextTestimonial">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="testimonial-pagination" id="testimonialPagination">
+                            <span class="pagination-dot active" data-index="0"></span>
+                            <span class="pagination-dot" data-index="1"></span>
+                            <span class="pagination-dot" data-index="2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery section-padding">
+            <div class="container">
+                <div class="gallery-header fade-in">
+                    <div class="section-subtitle">Galerie</div>
+                    <h2 class="section-title gallery-title">Naše prostředí a procedury</h2>
+                </div>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-img="/api/placeholder/800/1200?query=aesthetic clinic reception luxury">
+                        <img src="/api/placeholder/600/900?query=aesthetic clinic reception luxury" alt="Recepce" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Recepce</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-img="/api/placeholder/800/600?query=laser therapy treatment room">
+                        <img src="/api/placeholder/600/400?query=laser therapy treatment room" alt="Ošetřovna" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Laserová ošetřovna</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-img="/api/placeholder/800/600?query=modern spa treatment room">
+                        <img src="/api/placeholder/600/400?query=modern spa treatment room" alt="Místnost pro ošetření" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Relaxační místnost</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-img="/api/placeholder/800/600?query=laser skin treatment procedure">
+                        <img src="/api/placeholder/600/400?query=laser skin treatment procedure" alt="Laserové ošetření pleti" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Laserové ošetření</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-img="/api/placeholder/800/600?query=cosmetic products premium">
+                        <img src="/api/placeholder/600/400?query=cosmetic products premium" alt="Kosmetické produkty" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">Prémiové produkty</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-pattern"></div>
+            <div class="container">
+                <div class="cta-inner">
+                    <div class="cta-content fade-in">
+                        <h2 class="cta-title">Objednejte se na konzultaci</h2>
+                        <p class="cta-text">Svěřte svou péči do rukou skutečných odborníků. Náš tým specialistů s mnohaletými zkušenostmi vám pomůže najít řešení šité na míru vašim individuálním potřebám.</p>
+                        <div class="cta-features">
+                            <div class="cta-feature">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-text">Nejmodernější technologie</div>
+                            </div>
+                            <div class="cta-feature">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-text">Individuální přístup</div>
+                            </div>
+                            <div class="cta-feature">
+                                <div class="feature-icon">✓</div>
+                                <div class="feature-text">Špičkoví odborníci</div>
+                            </div>
+                        </div>
+                        <a href="#contact" class="btn cta-button">
+                            <span class="btn-text">Objednat konzultaci</span>
+                            <span class="btn-icon">→</span>
+                        </a>
+                    </div>
+                    <div class="cta-image fade-in-right">
+                        <img src="/api/placeholder/800/600?query=aesthetic consultation professional" alt="Konzultace">
+                        <div class="cta-accent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="contact section-padding">
+            <div class="container">
+                <div class="contact-inner">
+                    <div class="contact-form fade-in-left">
+                        <h2 class="contact-title">Kontaktujte nás</h2>
+                        <p class="contact-text">Vyplňte formulář níže a my se vám co nejdříve ozveme zpět. Případně nás můžete kontaktovat přímo na telefonu nebo e-mailu.</p>
+                        
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Jméno a příjmení</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Telefon</label>
+                                <input type="tel" id="phone" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service" class="form-label">Vyberte službu</label>
+                                <select id="service" class="form-control" required>
+                                    <option value="" selected disabled>Vyberte...</option>
+                                    <option value="laser">Laserové ošetření pleti</option>
+                                    <option value="rejuvenation">Omlazení pokožky</option>
+                                    <option value="body">Formování postavy</option>
+                                    <option value="hair">Odstranění chloupků</option>
+                                    <option value="skintag">Odstranění kožních výrůstků</option>
+                                    <option value="pelvic">Posilování pánevního dna</option>
+                                    <option value="other">Jiné</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label">Zpráva</label>
+                                <textarea id="message" class="form-control" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="form-btn">Odeslat zprávu</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info fade-in-right">
+                        <h3 class="contact-info-title">Kde nás najdete</h3>
+                        
+                        <ul class="contact-info-list">
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>Adresa</h4>
+                                    <p>Vinohradská 1233/22<br>120 00 Praha 2</p>
+                                </div>
+                            </li>
+                            
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>Telefon</h4>
+                                    <p>+420 123 456 789</p>
+                                </div>
+                            </li>
+                            
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>Email</h4>
+                                    <p>info@krasa-zdravi.cz</p>
+                                </div>
+                            </li>
+                            
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>Otevírací doba</h4>
+                                    <p>Po-Pá: 9:00 - 19:00<br>So: 10:00 - 15:00<br>Ne: Zavřeno</p>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.1070222385847!2d14.4285613!3d50.0721107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94eb39ba49af%3A0x5bd37c4cfcc142d!2sVinohradsk%C3%A1%201233%2F22%2C%20120%2000%20Praha%202!5e0!3m2!1scs!2scz!4v1714409686115!5m2!1scs!2scz" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span>Krása & Zdraví</span>
+                        <span class="footer-logo-accent">Centrum laserové estetiky</span>
+                    </a>
+                    <p class="footer-description">Specializovaná klinika v oblasti laserové estetiky a zdraví s důrazem na individuální přístup a profesionální péči založená na nejnovějších postupech a technologiích.</p>
+                    <div class="footer-contact-cta">
+                        <a href="tel:+420123456789" class="footer-phone">+420 123 456 789</a>
+                        <span class="footer-hours">Po-Pá: 9:00 - 19:00</span>
+                    </div>
+                </div>
+                
+                <div class="footer-grid">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Navigace</h4>
+                        <ul class="footer-links">
+                            <li><a href="#home" class="footer-link">Domů</a></li>
+                            <li><a href="#about" class="footer-link">O nás</a></li>
+                            <li><a href="#services" class="footer-link">Služby</a></li>
+                            <li><a href="#testimonials" class="footer-link">Reference</a></li>
+                            <li><a href="#gallery" class="footer-link">Galerie</a></li>
+                            <li><a href="#contact" class="footer-link">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Naše služby</h4>
+                        <ul class="footer-links">
+                            <li><a href="#" class="footer-link">Laserové ošetření pleti</a></li>
+                            <li><a href="#" class="footer-link">Omlazení pokožky</a></li>
+                            <li><a href="#" class="footer-link">Formování postavy</a></li>
+                            <li><a href="#" class="footer-link">Odstranění chloupků</a></li>
+                            <li><a href="#" class="footer-link">Odstranění kožních výrůstků</a></li>
+                            <li><a href="#" class="footer-link">Posilování pánevního dna</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Kontakt</h4>
+                        <address class="footer-address">
+                            <div class="address-item">
+                                <i class="fas fa-map-marker-alt address-icon"></i>
+                                <span>Vinohradská 1233/22, 120 00 Praha 2</span>
+                            </div>
+                            <div class="address-item">
+                                <i class="fas fa-phone-alt address-icon"></i>
+                                <span>+420 123 456 789</span>
+                            </div>
+                            <div class="address-item">
+                                <i class="fas fa-envelope address-icon"></i>
+                                <span>info@krasa-zdravi.cz</span>
+                            </div>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-inner">
+                    <div class="footer-copyright">
+                        &copy; <span id="year"></span> Krása & Zdraví - Centrum laserové estetiky. Všechna práva vyhrazena.
+                    </div>
+                    
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="footer-legal">
+                        <a href="#" class="legal-link">Ochrana osobních údajů</a>
+                        <a href="#" class="legal-link">Obchodní podmínky</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-decoration">
+            <div class="footer-shape"></div>
+        </div>
+    </footer>
+    
+    <!-- Mobile Fixed CTA -->
+    <div class="mobile-fixed-cta">
+        <div class="mobile-fixed-cta-text">Potřebujete pomoc?</div>
+        <a href="tel:+420123456789" class="mobile-fixed-cta-btn">Zavolejte nám</a>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+    
+    <!-- Gallery Modal -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="" class="modal-image" id="modalImage">
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Initialize GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        
+        // DOM Elements
+        const header = document.querySelector('.header');
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const backToTop = document.querySelector('.back-to-top');
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryModal = document.getElementById('galleryModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const contactForm = document.getElementById('contactForm');
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeLeftElements = document.querySelectorAll('.fade-in-left');
+        const fadeRightElements = document.querySelectorAll('.fade-in-right');
+        const zoomElements = document.querySelectorAll('.zoom-in');
+        const staggerItems = document.querySelectorAll('.stagger-item');
+        const revealElements = document.querySelectorAll('.reveal-text');
+        
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Testimonial slider
+        const testimonialsWrapper = document.getElementById('testimonialsWrapper');
+        const testimonialItems = document.querySelectorAll('.testimonial-item');
+        const prevTestimonial = document.getElementById('prevTestimonial');
+        const nextTestimonial = document.getElementById('nextTestimonial');
+        const paginationDots = document.querySelectorAll('.pagination-dot');
+        
+        let currentTestimonial = 0;
+        const testimonialCount = testimonialItems.length;
+        
+        function showTestimonial(index) {
+            if (index < 0) {
+                currentTestimonial = testimonialCount - 1;
+            } else if (index >= testimonialCount) {
+                currentTestimonial = 0;
+            } else {
+                currentTestimonial = index;
+            }
+            
+            // Update transform
+            testimonialsWrapper.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+            
+            // Update active class
+            testimonialItems.forEach(item => item.classList.remove('active'));
+            testimonialItems[currentTestimonial].classList.add('active');
+            
+            // Update pagination
+            paginationDots.forEach(dot => dot.classList.remove('active'));
+            paginationDots[currentTestimonial].classList.add('active');
+        }
+        
+        // Testimonial controls
+        prevTestimonial.addEventListener('click', () => {
+            showTestimonial(currentTestimonial - 1);
+        });
+        
+        nextTestimonial.addEventListener('click', () => {
+            showTestimonial(currentTestimonial + 1);
+        });
+        
+        // Pagination dots
+        paginationDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showTestimonial(index);
+            });
+        });
+        
+        // Auto slide testimonials
+        let testimonialInterval = setInterval(() => {
+            showTestimonial(currentTestimonial + 1);
+        }, 6000);
+        
+        // Pause auto slide on hover
+        testimonialsWrapper.addEventListener('mouseenter', () => {
+            clearInterval(testimonialInterval);
+        });
+        
+        testimonialsWrapper.addEventListener('mouseleave', () => {
+            testimonialInterval = setInterval(() => {
+                showTestimonial(currentTestimonial + 1);
+            }, 6000);
+        });
+        
+        // Mobile menu toggle
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu
+        const closeMenu = () => {
+            mobileToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        
+        mobileMenuClose.addEventListener('click', closeMenu);
+        mobileMenuOverlay.addEventListener('click', closeMenu);
+        
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Scroll effects
+        window.addEventListener('scroll', () => {
+            // Header scroll effect
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Back to top button visibility
+            if (window.scrollY > 500) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Gallery modal
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.getAttribute('data-img');
+                modalImage.src = imgSrc;
+                galleryModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close gallery modal
+        modalClose.addEventListener('click', () => {
+            galleryModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        galleryModal.addEventListener('click', (e) => {
+            if (e.target === galleryModal) {
+                galleryModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Contact form submission
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Děkujeme za váš dotaz. Budeme vás kontaktovat co nejdříve.');
+            contactForm.reset();
+        });
+        
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+            
+            gsap.to(cursorFollower, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.3
+            });
+        });
+        
+        // Hover effect on buttons and links
+        const cursorTargets = document.querySelectorAll('a, button, .gallery-item, .service-card');
+        
+        cursorTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursor.style.width = '0';
+                cursor.style.height = '0';
+                cursorFollower.style.width = '60px';
+                cursorFollower.style.height = '60px';
+                cursorFollower.style.border = '1px solid var(--primary)';
+                cursorFollower.style.backgroundColor = 'rgba(212, 193, 176, 0.1)';
+            });
+            
+            target.addEventListener('mouseleave', () => {
+                cursor.style.width = '8px';
+                cursor.style.height = '8px';
+                cursorFollower.style.width = '40px';
+                cursorFollower.style.height = '40px';
+                cursorFollower.style.border = '1px solid rgba(209, 196, 179, 0.8)';
+                cursorFollower.style.backgroundColor = 'transparent';
+            });
+        });
+        
+        // Hide cursor and follower on mobile devices
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        if (isMobile()) {
+            document.querySelector('.cursor-container').style.display = 'none';
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        let headerOffset = 100;
+                        if (window.innerWidth <= 768) {
+                            headerOffset = 70;
+                        }
+                        
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Scroll animations with GSAP
+        function initScrollAnimations() {
+            // Fade in animations
+            fadeElements.forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        el.classList.add('active');
+                    },
+                    once: true
+                });
+            });
+            
+            // Fade in from left
+            fadeLeftElements.forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        el.classList.add('active');
+                    },
+                    once: true
+                });
+            });
+            
+            // Fade in from right
+            fadeRightElements.forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        el.classList.add('active');
+                    },
+                    once: true
+                });
+            });
+            
+            // Zoom in animations
+            zoomElements.forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        el.classList.add('active');
+                    },
+                    once: true
+                });
+            });
+            
+            // Text reveal animations
+            revealElements.forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        el.classList.add('active');
+                    },
+                    once: true
+                });
+            });
+            
+            // Staggered animations for service cards
+            const servicesGrid = document.querySelector('.services-grid');
+            if (servicesGrid) {
+                ScrollTrigger.create({
+                    trigger: servicesGrid,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        gsap.to('.stagger-item', {
+                            opacity: 1,
+                            y: 0,
+                            stagger: 0.1,
+                            duration: 0.8,
+                            ease: "power3.out"
+                        });
+                    },
+                    once: true
+                });
+            }
+            
+            // Parallax effects
+            gsap.utils.toArray('.about-image, .cta-image').forEach(element => {
+                gsap.to(element, {
+                    y: -50,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                });
+            });
+        }
+        
+        // Initialize animations when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize animations
+            initScrollAnimations();
+            
+            // Activate hero section animations immediately
+            document.querySelector('.hero-content').classList.add('active');
+            
+            // Set up service cards hover effects
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const image = card.querySelector('.service-image img');
+                    gsap.to(image, {
+                        scale: 1.1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    const image = card.querySelector('.service-image img');
+                    gsap.to(image, {
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
